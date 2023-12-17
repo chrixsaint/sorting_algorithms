@@ -1,58 +1,61 @@
 #include "sort.h"
 
 /**
- * swap - swap two elements in array
- * @x: int
- * @y: int
- * Return: always 0
+ * swap - Swaps two elements in an array.
+ * @x: The first element to be swapped.
+ * @y: The second element to be swapped.
  */
 
 void swap(int *x, int *y)
 {
-	int temp;
+	int tmporal;
 
-	temp = *x;
+	tmporal = *x;
 	*x = *y;
-	*y = temp;
+	*y = tmporal;
 }
 
 /**
- * shell_sort - sort array via shell method
- * @array: int
- * @size: size_t
- * Return: always 0
+ * shell_sort - Sorts an array of integers in
+ * ascending order using the Shell Sort algorithm.
+ * @array: The array to be sorted.
+ * @size: The size of the array.
  */
 
 void shell_sort(int *array, size_t size)
 {
+	size_t jaii, aii;
 	size_t gap = 1;
-	size_t j, i;
 
-	if (!array)
+	if (array == NULL)
+	{
 		return;
+	}
 
 	if (size < 2)
+	{
 		return;
+	}
 
 	while (gap <= size / 3)
-	{
 		gap = gap * 3 + 1;
-	}
 
 	while (gap >= 1)
 	{
-		for (i = 0; i < gap; i++)
+		for (aii = 0; aii < gap; aii++)
 		{
-			for (j = i; j < size - gap; j += gap)
+			for (jaii = aii; jaii < size - gap; jaii += gap)
 			{
-				while (array[j] > array[j + gap])
+				while (array[jaii] > array[jaii + gap])
 				{
-					swap(&array[j], &array[j + gap]);
+					swap(&array[jaii], &array[jaii + gap]);
 
-					if (j >= gap)
-						j = j - gap;
+					if (jaii >= gap)
+						jaii = jaii - gap;
 					else
+					{
 						break;
+					}
 				}
 			}
 		}
