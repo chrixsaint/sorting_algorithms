@@ -1,91 +1,93 @@
 #include "sort.h"
-
-void swapValues(int *a, int *b);
-void bitonicCombine(int *array, size_t size, size_t start, size_t seq,
-		char flow);
-void orderedSequence(int *array, size_t size, size_t start, size_t seq, char flow);
-void PeakySort(int *array, size_t size);
-
+#include <stdio.h>
 /**
- * swapValues - Swap two integers in an array.
- * @a: The first integer to swap.
- * @b: The second integer to swap.
+ * swap - change two values in ascending or descending order
+ * @arr: array
+ * @item1: item one
+ * @item2: item two
+ * @order: 1: ascending order, 0 descending order
  */
-void swapValues(int *a, int *b)
+void swap(int arr[], int item1, int item2, int order)
 {
-	int tmp;
+	int temp;
 
-	tmp = *a;
-	*a = *b;
-	*b = tmp;
-}
-
-/**
- * bitonicCombine - Sort a bitonic sequence inside an array of integers.
- * @array: An array of integers.
- * @size: The size of the array.
- * @start: The starting index of the sequence in array to sort.
- * @seq: The size of the sequence to sort.
- * @flow: The direction to sort in.
- */
-void bitonicCombine(int *array, size_t size, size_t start, size_t seq,
-		char flow)
-{
-	size_t i, jump = seq / 2;
-
-	if (seq > 1)
+	if (order == (arr[item1] > arr[item2]))
 	{
-		for (i = start; i < start + jump; i++)
+		temp = arr[item1];
+		arr[item1] = arr[item2];
+		arr[item2] = temp;
+	}
+}
+/**
+ * merge - sort bitonic sequences recursively in both orders
+ * @arr: array
+ * @low: first element
+ * @nelemnt: elements number
+ * @order: 1: ascending order, 0 descending order
+ */
+void merge(int arr[], int low, int nelemnt, int order)
+{
+	int mid, i;
+
+	if (nelemnt > 1)
+	{
+		mid = nelemnt / 2;
+		for (i = low; i < low + mid; i++)
+			swap(arr, i, i + mid, order);
+		merge(arr, low, mid, order);
+		merge(arr, low + mid, mid, order);
+	}
+}
+/**
+ * bitonicsort - bitonic sort algorithm implementation
+ * @arr: array
+ * @low: first element
+ * @nelemnt: number of elements
+ * @order: 1: ascending order, 0 descending order
+ * @size: array lenght
+ */
+void bitonicsort(int arr[], int low, int nelemnt, int order, int size)
+{
+	int mid;
+
+	if (nelemnt > 1)
+	{
+		if (order >= 1)
 		{
-			if ((flow == UP && array[i] > array[i + jump]) ||
-			    (flow == DOWN && array[i] < array[i + jump]))
-				swapValues(array + i, array + i + jump);
+			printf("Merging [%i/%i] (UP):\n", nelemnt, size);
+			print_array(&arr[low], nelemnt);
 		}
-		bitonicCombine(array, size, start, jump, flow);
-		bitonicCombine(array, size, start + jump, jump, flow);
+		else
+		{
+			printf("Merging [%i/%i] (DOWN):\n", nelemnt, size);
+			print_array(&arr[low], nelemnt);
+		}
+		mid = nelemnt / 2;
+		bitonicsort(arr, low, mid, 1, size);
+		bitonicsort(arr, low + mid, mid, 0, size);
+		merge(arr, low, nelemnt, order);
+		if (order <= 0)
+		{
+			printf("Result [%i/%i] (DOWN):\n", nelemnt, size);
+			print_array(&arr[low], nelemnt);
+		}
+		if (order >= 1)
+		{
+			printf("Result [%i/%i] (UP):\n", nelemnt, size);
+			print_array(&arr[low], nelemnt);
+		}
 	}
 }
-
 /**
- * orderedSequence - Convert an array of integers into a bitonic sequence.
- * @array: An array of integers.
- * @size: The size of the array.
- * @start: The starting index of a block of the building bitonic sequence.
- * @seq: The size of a block of the building bitonic sequence.
- * @flow: The direction to sort the bitonic sequence block in.
+ * bitonic_sort - prepare the terrain to bitonic sort algorithm
+ * @array: array
+ * @size: array lenght
  */
-void orderedSequence(int *array, size_t size, size_t start, size_t seq, char flow)
+void bitonic_sort(int *array, size_t size)
 {
-	size_t cut = seq / 2;
-	char *str = (flow == UP) ? "UP" : "DOWN";
+	int order = 1;
 
-	if (seq > 1)
-	{
-		printf("Merging [%lu/%lu] (%s):\n", seq, size, str);
-		outputArray(array + start, seq);
-
-		orderedSequence(array, size, start, cut, UP);
-		orderedSequence(array, size, start + cut, cut, DOWN);
-		bitonicCombine(array, size, start, seq, flow);
-
-		printf("Result [%lu/%lu] (%s):\n", seq, size, str);
-		outputArray(array + start, seq);
-	}
-}
-
-/**
- * PeakySort - Sort an array of integers in ascending
- *                order using the bitonic sort algorithm.
- * @array: An array of integers.
- * @size: The size of the array.
- *
- * Description: Prints the array after each swap. Only works for
- * size = 2^k where k >= 0 (ie. size equal to powers of 2).
- */
-void PeakySort(int *array, size_t size)
-{
-	if (array == NULL || size < 2)
+	if (!array || size < 2)
 		return;
-
-	orderedSequence(array, size, 0, size, UP);
+	bitonicsort(array, 0, size, order, size);
 }

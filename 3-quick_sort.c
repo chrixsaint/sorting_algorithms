@@ -1,96 +1,78 @@
 #include "sort.h"
-
-void swapValues(int *a, int *b);
-int intuitivePartition(int *array, size_t size, int left, int right);
-void basicSort(int *array, size_t size, int left, int right);
-void SwiftSort(int *array, size_t size);
-
 /**
- * swapValues - Swap two integers in an array.
- * @a: The first integer to swap.
- * @b: The second integer to swap.
- */
-void swapValues(int *a, int *b)
+*swap - the positions of two elements into an array
+*@array: array
+*@item1: array element
+*@item2: array element
+*/
+void swap(int *array, ssize_t item1, ssize_t item2)
 {
 	int tmp;
 
-	tmp = *a;
-	*a = *b;
-	*b = tmp;
+	tmp = array[item1];
+	array[item1] = array[item2];
+	array[item2] = tmp;
 }
-
 /**
- * intuitivePartition - Order a subset of an array of integers according to
- *                    the lomuto partition scheme (last element as pivot).
- * @array: The array of integers.
- * @size: The size of the array.
- * @left: The starting index of the subset to order.
- * @right: The ending index of the subset to order.
- *
- * Return: The final partition index.
+ *lomuto_partition - lomuto partition sorting scheme implementation
+ *@array: array
+ *@first: first array element
+ *@last: last array element
+ *@size: size array
+ *Return: return the position of the last element sorted
  */
-int intuitivePartition(int *array, size_t size, int left, int right)
+int lomuto_partition(int *array, ssize_t first, ssize_t last, size_t size)
 {
-	int *pivot, above, below;
+	int pivot = array[last];
+	ssize_t current = first, finder;
 
-	pivot = array + right;
-	for (above = below = left; below < right; below++)
+	for (finder = first; finder < last; finder++)
 	{
-		if (array[below] < *pivot)
+		if (array[finder] < pivot)
 		{
-			if (above < below)
+			if (array[current] != array[finder])
 			{
-				swapValues(array + below, array + above);
-				outputArray(array, size);
+				swap(array, current, finder);
+				print_array(array, size);
 			}
-			above++;
+			current++;
 		}
 	}
-
-	if (array[above] > *pivot)
+	if (array[current] != array[last])
 	{
-		swapValues(array + above, pivot);
-		outputArray(array, size);
+		swap(array, current, last);
+		print_array(array, size);
 	}
-
-	return (above);
+	return (current);
 }
-
 /**
- * basicSort - Implement the quicksort algorithm through recursion.
- * @array: An array of integers to sort.
- * @size: The size of the array.
- * @left: The starting index of the array partition to order.
- * @right: The ending index of the array partition to order.
- *
- * Description: Uses the Lomuto partition scheme.
+ *qs - qucksort algorithm implementation
+ *@array: array
+ *@first: first array element
+ *@last: last array element
+ *@size: array size
  */
-void basicSort(int *array, size_t size, int left, int right)
+void qs(int *array, ssize_t first, ssize_t last, int size)
 {
-	int part;
+	ssize_t position = 0;
 
-	if (right - left > 0)
+
+	if (first < last)
 	{
-		part = intuitivePartition(array, size, left, right);
-		basicSort(array, size, left, part - 1);
-		basicSort(array, size, part + 1, right);
+		position = lomuto_partition(array, first, last, size);
+
+		qs(array, first, position - 1, size);
+		qs(array, position + 1, last, size);
 	}
 }
-
 /**
- * SwiftSort - Sort an array of integers in ascending
- *              order using the quicksort algorithm.
- * @array: An array of integers.
- * @size: The size of the array.
- *
- * Description: Uses the Lomuto partition scheme. Prints
- *              the array after each swap of two elements.
+ *quick_sort - prepare the terrain to quicksort algorithm
+ *@array: array
+ *@size: array size
  */
-void SwiftSort(int *array, size_t size)
+void quick_sort(int *array, size_t size)
 {
-	if (array == NULL || size < 2)
+	if (!array || size < 2)
 		return;
-
-	basicSort(array, size, 0, size - 1);
+	qs(array, 0, size - 1, size);
 }
-

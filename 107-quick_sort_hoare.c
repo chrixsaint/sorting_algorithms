@@ -1,95 +1,72 @@
 #include "sort.h"
-
-void swapValues(int *a, int *b);
-int SplitPartition(int *array, size_t size, int left, int right);
-void SplitMergeSort(int *array, size_t size, int left, int right);
-void SwiftSort_hoare(int *array, size_t size);
-
 /**
- * swapValues - Swap two integers in an array.
- * @a: The first integer to swap.
- * @b: The second integer to swap.
- */
-void swapValues(int *a, int *b)
+*swap - the positions of two elements into an array
+*@array: array
+*@item1: array element
+*@item2: array element
+*/
+void swap(int *array, ssize_t item1, ssize_t item2)
 {
 	int tmp;
 
-	tmp = *a;
-	*a = *b;
-	*b = tmp;
+	tmp = array[item1];
+	array[item1] = array[item2];
+	array[item2] = tmp;
 }
-
 /**
- * SplitPartition - Order a subset of an array of integers
- *                   according to the hoare partition scheme.
- * @array: The array of integers.
- * @size: The size of the array.
- * @left: The starting index of the subset to order.
- * @right: The ending index of the subset to order.
- *
- * Return: The final partition index.
- *
- * Description: Uses the last element of the partition as the pivot.
- * Prints the array after each swap of two elements.
+ *hoare_partition - hoare partition sorting scheme implementation
+ *@array: array
+ *@first: first array element
+ *@last: last array element
+ *@size: size array
+ *Return: return the position of the last element sorted
  */
-int SplitPartition(int *array, size_t size, int left, int right)
+int hoare_partition(int *array, int first, int last, int size)
 {
-	int pivot, above, below;
+	int current = first - 1, finder = last + 1;
+	int pivot = array[last];
 
-	pivot = array[right];
-	for (above = left - 1, below = right + 1; above < below;)
+	while (1)
 	{
+
 		do {
-			above++;
-		} while (array[above] < pivot);
+			current++;
+		} while (array[current] < pivot);
 		do {
-			below--;
-		} while (array[below] > pivot);
-
-		if (above < below)
-		{
-			swapValues(array + above, array + below);
-			outputArray(array, size);
-		}
-	}
-
-	return (above);
-}
-
-/**
- * SplitMergeSort - Implement the quicksort algorithm through recursion.
- * @array: An array of integers to sort.
- * @size: The size of the array.
- * @left: The starting index of the array partition to order.
- * @right: The ending index of the array partition to order.
- *
- * Description: Uses the Hoare partition scheme.
- */
-void SplitMergeSort(int *array, size_t size, int left, int right)
-{
-	int part;
-
-	if (right - left > 0)
-	{
-		part = SplitPartition(array, size, left, right);
-		SplitMergeSort(array, size, left, part - 1);
-		SplitMergeSort(array, size, part, right);
+			finder--;
+		} while (array[finder] > pivot);
+		if (current >= finder)
+			return (current);
+		swap(array, current, finder);
+		print_array(array, size);
 	}
 }
-
 /**
- * SwiftSort_hoare - Sort an array of integers in ascending
- *                    order using the quicksort algorithm.
- * @array: An array of integers.
- * @size: The size of the array.
- *
- * Description: Uses the Hoare partition scheme. Prints
- * the array after each swap of two elements.
+ *qs - qucksort algorithm implementation
+ *@array: array
+ *@first: first array element
+ *@last: last array element
+ *@size: array size
  */
-void SwiftSort_hoare(int *array, size_t size)
+void qs(int *array, ssize_t first, ssize_t last, int size)
 {
-	if (array == NULL || size < 2)
+	ssize_t position = 0;
+
+	if (first < last)
+	{
+		position = hoare_partition(array, first, last, size);
+		qs(array, first, position - 1, size);
+		qs(array, position, last, size);
+	}
+}
+/**
+ *quick_sort_hoare - prepare the terrain to quicksort algorithm
+ *@array: array
+ *@size: array size
+ */
+void quick_sort_hoare(int *array, size_t size)
+{
+	if (!array || size < 2)
 		return;
-
-	SplitMergeSort(array, size, 0, size - 1);
+	qs(array, 0, size - 1, size);
 }

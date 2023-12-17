@@ -1,24 +1,7 @@
 #ifndef SORT_H
 #define SORT_H
 
-#include <stdio.h>
 #include <stdlib.h>
-
-/* Comparison direction macros for bitonic sort */
-#define UP 0
-#define DOWN 1
-
-/**
- * enum bool - Enumeration of Boolean values.
- * @false: Equals 0.
- * @true: Equals 1.
- */
-typedef enum bool
-{
-	false = 0,
-	true
-} bool;
-
 /**
  * struct listint_s - Doubly linked list node
  *
@@ -33,22 +16,20 @@ typedef struct listint_s
 	struct listint_s *next;
 } listint_t;
 
-/* Printing helper functions */
-void outputArray(const int *array, size_t size);
-void outputList(const listint_t *list);
-
-/* Sorting algoritms */
 void bubble_sort(int *array, size_t size);
+void print_array(const int *array, size_t size);
+void print_list(const listint_t *list);
+listint_t *swap_node(listint_t *node, listint_t **list);
 void insertion_sort_list(listint_t **list);
-void pickSort(int *array, size_t size);
-void SwiftSort(int *array, size_t size);
+void selection_sort(int *array, size_t size);
+void quick_sort(int *array, size_t size);
 void shell_sort(int *array, size_t size);
-void ShakerSortList(listint_t **list);
-void NumericSort(int *array, size_t size);
-void CombineSort(int *array, size_t size);
-void PrioritySort(int *array, size_t size);
-void BaseSort(int *array, size_t size);
-void PeakySort(int *array, size_t size);
-void SwiftSort_hoare(int *array, size_t size);
+void cocktail_sort_list(listint_t **list);
+void counting_sort(int *array, size_t size);
+void merge_sort(int *array, size_t size);
+void heap_sort(int *array, size_t size);
+void radix_sort(int *array, size_t size);
+void bitonic_sort(int *array, size_t size);
+void quick_sort_hoare(int *array, size_t size);
 
-#endif /* SORT_H */
+#endif

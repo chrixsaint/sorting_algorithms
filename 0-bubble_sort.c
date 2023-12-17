@@ -1,46 +1,25 @@
 #include "sort.h"
-
 /**
- * switchIntegers - Swap two integers in an array.
- * @firstInteger: The first integer to swap.
- * @secondInteger: The second integer to swap.
+ * bubble_sort - sort array lements from min to max value
+ * @array: array
+ * @size: array size
  */
-void switchIntegers(int *firstInteger, int *secondInteger) {
-    int temporaryVariable;
+void bubble_sort(int *array, size_t size)
+{
 
-    temporaryVariable = *firstInteger;
-    *firstInteger = *secondInteger;
-    *secondInteger = temporaryVariable;
+	size_t i, index, tmp = 0;
+
+	if (size < 2)
+		return;
+	for (i = 0; i < size; i++)
+		for (index = 0; index < size; index++)
+		{
+			if (array[index] > array[index + 1] && array[index + 1])
+			{
+			tmp = array[index];
+			array[index] = array[index + 1];
+			array[index + 1] = tmp;
+			print_array(array, size);
+			}
+		}
 }
-
-/**
- * bubble_sort - Sort an array of integers in ascending order.
- * @listOfIntegers: An array of integers to sort.
- * @numberOfIntegers: The size of the array.
- *
- * Description: Prints the array after each swap.
- */
-void bubble_sort(int *listOfIntegers, size_t numberOfIntegers) {
-    size_t currentPosition, numberOfIntegersToSort;
-    bool swapsMade = false;
-
-    if (listOfIntegers == NULL || numberOfIntegers < 2) {
-        return;
-    }
-
-    while (!swapsMade) {
-        swapsMade = true;
-        numberOfIntegersToSort = numberOfIntegers - 1;
-
-        for (currentPosition = 0; currentPosition < numberOfIntegersToSort; currentPosition++) {
-            if (listOfIntegers[currentPosition] > listOfIntegers[currentPosition + 1]) {
-                switchIntegers(&listOfIntegers[currentPosition], &listOfIntegers[currentPosition + 1]);
-                outputArray(listOfIntegers, numberOfIntegers);
-                swapsMade = false;
-            }
-        }
-
-        numberOfIntegersToSort--;
-    }
-}
-
