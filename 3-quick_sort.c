@@ -1,28 +1,30 @@
 #include "sort.h"
 
 /**
- * quick_sort- sorting via quick sort method
- * @array: int
- * @size: size_t
- * Return: always 0
+ * quick_sort - Sorts an array of integers in ascending
+ * order using the Quick Sort algorithm.
+ * @array: The array to be sorted.
+ * @size: The size of the array.
  */
 
 void quick_sort(int *array, size_t size)
 {
 
 	if (size < 2)
-		return;
+	{
+		return;	
+	}
 
 	caller(array, 0, size - 1, size);
 }
 
 /**
- * caller- using this function recursively to call partitioner
- * @array: int
- * @start: int
- * @end: int
- * @size: size_t
- * Return: always 0
+ * caller - Recursively calls the partition function
+ * to perform quick sort.
+ * @array: The array to be sorted.
+ * @start: The starting index of the current partition.
+ * @end: The ending index of the current partition.
+ * @size: The size of the array.
  */
 
 void caller(int *array, int start, int end, size_t size)
@@ -42,19 +44,20 @@ void caller(int *array, int start, int end, size_t size)
 }
 
 /**
- * partition- partition function to sort using quicksort
- * @array: int
- * @start: int
- * @end: int
- * @size: size_t
- * Return: int
+ * partition - Chooses a pivot and partitions the array
+ * into two sub-arrays.
+ * @array: The array to be sorted.
+ * @start: The starting index of the current partition.
+ * @end: The ending index of the current partition.
+ * @size: The size of the array.
+ * Return: The index of the pivot element after partitioning.
  */
 
 int partition(int *array, int start, int end, size_t size)
 {
+	int check = start;
 	int low = start - 1;
 	int pivot = array[end];
-	int check = start;
 
 	while (check < end)
 	{
@@ -80,20 +83,18 @@ int partition(int *array, int start, int end, size_t size)
 }
 
 /**
- * swap- swap two elements in array
- * @low: int
- * @high: int
- * Return: always 0
+ * swap - Swaps two elements in an array.
+ * @low: The first element to be swapped.
+ * @high: The second element to be swapped.
  */
-
 
 void swap(int *low, int *high)
 {
-	int temp;
+	int tmporal;
 
-	temp = *low;
+	tmporal = *low;
 	*low = *high;
-	*high = temp;
+	*high = tmporal;
 }
 
 
