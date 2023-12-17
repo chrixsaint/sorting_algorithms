@@ -61,19 +61,19 @@ More Info
 
 ### Data Structure and Functions
 
--   For this project you are given the following `print_array`, and `print_list` functions:
+-   For this project you are given the following `outputArray`, and `outputList` functions:
 
 ```
 #include <stdlib.h>
 #include <stdio.h>
 
 /**
- * print_array - Prints an array of integers
+ * outputArray - Prints an array of integers
  *
  * @array: The array to be printed
  * @size: Number of elements in @array
  */
-void print_array(const int *array, size_t size)
+void outputArray(const int *array, size_t size)
 {
     size_t i;
 
@@ -95,11 +95,11 @@ void print_array(const int *array, size_t size)
 #include "sort.h"
 
 /**
- * print_list - Prints a list of integers
+ * outputList - Prints a list of integers
  *
  * @list: The list to be printed
  */
-void print_list(const listint_t *list)
+void outputList(const listint_t *list)
 {
     int i;
 
@@ -117,8 +117,8 @@ void print_list(const listint_t *list)
 
 ```
 
--   Our files `print_array.c` and `print_list.c` (containing the `print_array` and `print_list` functions) will be compiled with your functions during the correction.
--   Please declare the prototype of the functions `print_array` and `print_list` in your `sort.h` header file
+-   Our files `outputArray.c` and `outputList.c` (containing the `outputArray` and `outputList` functions) will be compiled with your functions during the correction.
+-   Please declare the prototype of the functions `outputArray` and `outputList` in your `sort.h` header file
 -   Please use the following data structure for doubly linked list:
 
 ```
@@ -196,14 +196,14 @@ int main(void)
     int array[] = {19, 48, 99, 71, 13, 52, 96, 73, 86, 7};
     size_t n = sizeof(array) / sizeof(array[0]);
 
-    print_array(array, n);
+    outputArray(array, n);
     printf("\n");
     bubble_sort(array, n);
     printf("\n");
-    print_array(array, n);
+    outputArray(array, n);
     return (0);
 }
-alex@/tmp/sort$ gcc -Wall -Wextra -Werror -pedantic  -std=gnu89 0-bubble_sort.c 0-main.c print_array.c -o bubble
+alex@/tmp/sort$ gcc -Wall -Wextra -Werror -pedantic  -std=gnu89 0-bubble_sort.c 0-main.c outputArray.c -o bubble
 alex@/tmp/sort$ ./bubble
 19, 48, 99, 71, 13, 52, 96, 73, 86, 7
 
@@ -310,14 +310,14 @@ int main(void)
     list = create_listint(array, n);
     if (!list)
         return (1);
-    print_list(list);
+    outputList(list);
     printf("\n");
     insertion_sort_list(&list);
     printf("\n");
-    print_list(list);
+    outputList(list);
     return (0);
 }
-alex@/tmp/sort$ gcc -Wall -Wextra -Werror -pedantic  -std=gnu89 1-main.c 1-insertion_sort_list.c print_list.c -o insertion
+alex@/tmp/sort$ gcc -Wall -Wextra -Werror -pedantic  -std=gnu89 1-main.c 1-insertion_sort_list.c outputList.c -o insertion
 alex@/tmp/sort$ ./insertion
 19, 48, 99, 71, 13, 52, 96, 73, 86, 7
 
@@ -363,7 +363,7 @@ Score: 0.00% (Checks completed: 0.00%)
 
 Write a function that sorts an array of integers in ascending order using the [Selection sort](https://alx-intranet.hbtn.io/rltoken/SEbg0fBEraioQcl-igvUSw "Selection sort") algorithm
 
--   Prototype: `void selection_sort(int *array, size_t size);`
+-   Prototype: `void pickSort(int *array, size_t size);`
 -   You're expected to print the `array` after each time you swap two elements (See example below)
 
 Write in the file `2-O`, the big O notations of the time complexity of the Selection sort algorithm, with 1 notation per line:
@@ -388,15 +388,15 @@ int main(void)
     int array[] = {19, 48, 99, 71, 13, 52, 96, 73, 86, 7};
     size_t n = sizeof(array) / sizeof(array[0]);
 
-    print_array(array, n);
+    outputArray(array, n);
     printf("\n");
-    selection_sort(array, n);
+    pickSort(array, n);
     printf("\n");
-    print_array(array, n);
+    outputArray(array, n);
     return (0);
 }
 alex@/tmp/sort$ gcc -Wall -Wextra -Werror -pedantic  -std=gnu89
-2-main.c 2-selection_sort.c print_array.c -o select
+2-main.c 2-pickSort.c outputArray.c -o select
 alex@/tmp/sort$ ./select
 19, 48, 99, 71, 13, 52, 96, 73, 86, 7
 
@@ -416,7 +416,7 @@ alex@/tmp/sort$
 **Repo:**
 
 -   GitHub repository: `sorting_algorithms`
--   File: `2-selection_sort.c, 2-O`
+-   File: `2-pickSort.c, 2-O`
 
  Done? Help Check your code Ask for a new correction QA Review
 
@@ -428,7 +428,7 @@ Score: 0.00% (Checks completed: 0.00%)
 
 Write a function that sorts an array of integers in ascending order using the [Quick sort](https://alx-intranet.hbtn.io/rltoken/_pBTrH0Xyo4BRmQn4CtnMg "Quick sort") algorithm
 
--   Prototype: `void quick_sort(int *array, size_t size);`
+-   Prototype: `void SwiftSort(int *array, size_t size);`
 -   You must implement the `Lomuto` partition scheme.
 -   The pivot should always be the last element of the partition being sorted.
 -   You're expected to print the `array` after each time you swap two elements (See example below)
@@ -455,14 +455,14 @@ int main(void)
     int array[] = {19, 48, 99, 71, 13, 52, 96, 73, 86, 7};
     size_t n = sizeof(array) / sizeof(array[0]);
 
-    print_array(array, n);
+    outputArray(array, n);
     printf("\n");
-    quick_sort(array, n);
+    SwiftSort(array, n);
     printf("\n");
-    print_array(array, n);
+    outputArray(array, n);
     return (0);
 }
-alex@/tmp/sort$ gcc -Wall -Wextra -Werror -pedantic  -std=gnu89 3-main.c 3-quick_sort.c print_array.c -o quick
+alex@/tmp/sort$ gcc -Wall -Wextra -Werror -pedantic  -std=gnu89 3-main.c 3-SwiftSort.c outputArray.c -o quick
 alex@/tmp/sort$ ./quick
 19, 48, 99, 71, 13, 52, 96, 73, 86, 7
 
@@ -482,7 +482,7 @@ alex@/tmp/sort$
 **Repo:**
 
 -   GitHub repository: `sorting_algorithms`
--   File: `3-quick_sort.c, 3-O`
+-   File: `3-SwiftSort.c, 3-O`
 
  Done? Help Check your code Ask for a new correction QA Review
 
