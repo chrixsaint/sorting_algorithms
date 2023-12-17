@@ -1,17 +1,19 @@
 #include "sort.h"
 
 /**
- * insertion_sort_list - sort list via insertion
- * @list: listint_t
- * Return: always 0
+ * insertion_sort_list - Sorts a doubly linked list of
+ * integers in ascending order using the Insertion Sort algorithm.
+ * @list: A double pointer to the head of the doubly linked list.
  */
 
 void insertion_sort_list(listint_t **list)
 {
 	listint_t *one, *two, *marker = NULL;
 
-	if (!list || !(*list) || !(*list)->next)
+	if (list == NULL || (*list) == NULL || !(*list)->next)
+	{
 		return;
+	}
 
 	one = *list;
 	two = one->next;
