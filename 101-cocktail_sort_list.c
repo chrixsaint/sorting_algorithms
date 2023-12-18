@@ -1,11 +1,10 @@
 #include "sort.h"
 
 /**
- * swap_list - swap 2 elements in doubly linked list
- * @list: listint_t
- * @low: listint_t
- * @high: listint_t
- * Return: void
+ * swap_list - Swaps two elements in a doubly linked list.
+ * @list: A double pointer to the head of the doubly linked list.
+ * @low: The lower element to be swapped.
+ * @high: The higher element to be swapped.
  */
 
 void swap_list(listint_t **list, listint_t *low, listint_t *high)
@@ -26,51 +25,47 @@ void swap_list(listint_t **list, listint_t *low, listint_t *high)
 }
 
 /**
- * move - move pointer in linked list
- * @check: listint_t
- * @pos: int position
- * @dir: int direction
- * Return: listint_t
+ * move - Moves the pointer in a doubly linked list.
+ * @check: The current node in the list.
+ * @pos: The position to move.
+ * @dir: The direction to move (1 for forward, -1 for backward).
+ * Return: The new position after moving.
  */
 
 listint_t *move(listint_t *check, int pos, int dir)
 {
-	int i;
+	int aii;
 
 	if (dir == 1)
 	{
-		for (i = 0; i < pos; i++)
-		{
+		for (aii = 0; aii < pos; aii++)
 			check = check->next;
-		}
 	}
 	else
 	{
 		while (check->next)
 			check = check->next;
 
-		for (i = 0; i < pos; i++)
-		{
+		for (aii = 0; aii < pos; aii++)
 			check = check->prev;
-		}
 	}
 	return (check);
 
 }
 
 /**
- * cocktail_sort_list - sort via cocktail sort method
- * @list: listint_t *
- * Return: always 0
+ * cocktail_sort_list - Sorts a doubly linked list
+ * in ascending order using the Cocktail Sort algorithm.
+ * @list: A double pointer to the head of the doubly linked list.
  */
 
 void cocktail_sort_list(listint_t **list)
 {
-	listint_t *check;
-	int cycle = 0;
 	int swaps = 1;
+	int cycle = 0;
+	listint_t *check;
 
-	if (!list || !(*list))
+	if (list == NULL || !(*list))
 		return;
 
 	while (swaps != 0)
