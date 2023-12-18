@@ -1,89 +1,86 @@
 #include "sort.h"
 
 /**
- * largest - Find the biggest number in an array.
- * @array: An array of integers.
- * @size: The size of the array.
- * Return: The biggest number in the array.
+ * largest - find largest number in array
+ * @array: int *
+ * @size: size_t
+ * Return: always 0
  */
 
 int largest(int *array, size_t size)
 {
-	size_t aii;
-	int biggest = array[0];
+	size_t i;
+	int largest = array[0];
 
-	for (aii = 1; aii < size; aii++)
+	for (i = 1; i < size; i++)
 	{
-		if (array[aii] > biggest)
-		{
-			biggest = array[aii];
-		}
+		if (array[i] > largest)
+			largest = array[i];
 	}
-	return (biggest);
+	return (largest);
 }
 
 
 /**
- * swap - Swap two elements in an array.
- * @low: The first element to swap.
- * @high: The second element to swap.
- * Return: void
+ * swap- swap two elements in array
+ * @low: int
+ * @high: int
+ * Return: always 0
  */
 
 
 void swap(int *low, int *high)
 {
-	int tmporal;
+	int temp;
 
-	tmporal = *low;
+	temp = *low;
 	*low = *high;
-	*high = tmporal;
+	*high = temp;
 }
 
 /**
- * counting_sort - Sort an array of integers
- * using the counting sort algorithm.
- * @array: An array of integers to be sorted.
- * @size: The size of the array.
- * Return: void
+ * counting_sort - sort via counting method
+ * @array: int*
+ * @size: size_t
+ * Return: always 0
  */
 
 void counting_sort(int *array, size_t size)
 {
-	int *counter, *fresh;
-	size_t aii, kaii;
+	int *counter, *new;
+	size_t i, k;
 
 	if (!array || size < 2)
 		return;
 
-	kaii = biggest((array), size);
+	k = largest((array), size);
 
-	counter = malloc((kaii + 1) * sizeof(int));
-	if (counter == NULL)
+	counter = malloc((k + 1) * sizeof(int));
+	if (!counter)
 		return;
-	fresh = malloc(size * sizeof(int));
+	new = malloc(size * sizeof(int));
 
-	for (aii = 0; aii < kaii + 1; aii++)
-		counter[aii] = 0;
+	for (i = 0; i < k + 1; i++)
+		counter[i] = 0;
 
-	for (aii = 0; aii < size; aii++)
-		counter[array[aii]]++;
+	for (i = 0; i < size; i++)
+		counter[array[i]]++;
 
-	for (aii = 1; aii < kaii + 1; aii++)
-		counter[aii] = counter[aii] + counter[aii - 1];
+	for (i = 1; i < k + 1; i++)
+		counter[i] = counter[i] + counter[i - 1];
 
-	print_array(counter, kaii + 1);
+	print_array(counter, k + 1);
 
-	for (aii = 0; aii < size; aii++)
+	for (i = 0; i < size; i++)
 	{
-		fresh[counter[array[aii]] - 1] = array[aii];
-		counter[array[aii]]--;
+		new[counter[array[i]] - 1] = array[i];
+		counter[array[i]]--;
 	}
 
-	for (aii = 0; aii < size; aii++)
+	for (i = 0; i < size; i++)
 	{
-		array[aii] = fresh[aii];
+		array[i] = new[i];
 	}
-	free(fresh);
+	free(new);
 	free(counter);
 }
