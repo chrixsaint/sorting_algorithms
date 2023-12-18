@@ -1,38 +1,42 @@
 #include "sort.h"
 
 /**
- * largest - find largest number in array
- * @array: int *
- * @size: size_t
- * Return: always 0
+ * largest - Find the largest number in an array.
+ * @array: An array of integers.
+ * @size: The size of the array.
+ * Return: The largest number in the array.
  */
 
 int largest(int *array, size_t size)
 {
-	size_t i;
+	size_t aii;
 	int largest = array[0];
 
-	for (i = 1; i < size; i++)
+	for (aii = 1; aii < size; aii++)
 	{
-		if (array[i] > largest)
-			largest = array[i];
+		if (array[aii] > largest)
+		{
+			largest = array[aii];
+		}
 	}
 	return (largest);
 }
 
 
 /**
- * digit - get digit out of num of place
- * @num: int
- * @place: place
- * Return: int
+ * digit - Get the digit at a specified place in a number.
+ * @num: An integer.
+ * @place: The place of the digit.
+ * Return: The digit at the specified place.
  */
 
 int digit(int num, int place)
 {
 
 	if (place > num)
+	{
 		return (0);
+	}
 
 	place = place * 10;
 	return ((num % place) / (place / 10));
@@ -42,51 +46,52 @@ int digit(int num, int place)
 
 
 /**
- * radix_sort - sort via radix method
- * @array: int*
- * @size: size_t
- * Return: always 0
+ * radix_sort - Sort an array of integers using
+ * the radix sort algorithm.
+ * @array: An array of integers to be sorted.
+ * @size: The size of the array.
+ * Return: void
  */
 
 void radix_sort(int *array, size_t size)
 {
-	int *counter, *new;
-	size_t i, large, p = 1;
+	int *counter, *fresh;
+	size_t aii, big, pi = 1;
 
-	if (!array || size < 2)
+	if (array == NULL || size < 2)
 		return;
 
-	large = largest(array, size);
+	big = largest(array, size);
 
 	counter = malloc((sizeof(int) * 10));
-	if (!counter)
+	if (counter == NULL)
 		return;
-	new = malloc(size * sizeof(int));
+	fresh = malloc(size * sizeof(int));
 
-	while (p <= large)
+	while (pi <= big)
 	{
-		for (i = 0; i < 10; i++)
-			counter[i] = 0;
+		for (aii = 0; aii < 10; aii++)
+			counter[aii] = 0;
 
-		for (i = 0; i < size; i++)
+		for (aii = 0; aii < size; aii++)
 		{
-			counter[digit(array[i], p)]++;
+			counter[digit(array[aii], pi)]++;
 		}
-		for (i = 1; i < 10; i++)
-			counter[i] = counter[i] + counter[i - 1];
+		for (aii = 1; aii < 10; aii++)
+			counter[aii] = counter[aii] + counter[aii - 1];
 
-		for (i = (size); i > 0; i--)
+		for (aii = (size); aii > 0; aii--)
 		{
-			new[counter[digit(array[i - 1], p)] - 1] = array[i - 1];
-			counter[digit(array[i - 1], p)]--;
+			fresh[counter[digit(array[aii - 1], pi)] - 1] = array[aii - 1];
+			counter[digit(array[aii - 1], pi)]--;
 		}
-		for (i = 0; i < size; i++)
+		for (aii = 0; aii < size; aii++)
 		{
-			array[i] = new[i];
+			array[aii] = fresh[aii];
 		}
-		p = p * 10;
+		pi = pi * 10;
 		print_array(array, size);
 	}
-	free(new);
+	free(fresh);
 	free(counter);
 }
