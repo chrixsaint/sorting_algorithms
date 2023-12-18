@@ -1,7 +1,5 @@
 #include "sort.h"
 
-
-
 /**
  * swap- swap two elements in array
  * @low: int
@@ -9,14 +7,13 @@
  * Return: always 0
  */
 
-
 void swap(int *low, int *high)
 {
-	int temp;
+	int tmporal;
 
-	temp = *low;
+	tmporal = *low;
 	*low = *high;
-	*high = temp;
+	*high = tmporal;
 }
 
 /**
